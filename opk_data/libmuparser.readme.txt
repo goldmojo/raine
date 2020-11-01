@@ -1,0 +1,5 @@
+libmuparser.so.2
+
+This version of muparser is a build of release 2.3.2
+
+Link : https://github.com/beltoforion/muparser

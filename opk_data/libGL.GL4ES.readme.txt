@@ -1,0 +1,16 @@
+libGL.so.1
+
+This version of libGL is a build of GL4ES on 2020/10/29 17:32:25 (master branch).
+
+Link : https://github.com/ptitSeb/gl4es
+
+Last integrated commit is bellow :
+
+Commit: 868354d900cae934130abbde1a05074067661ddc
+Parents: 2a6ada1dc6c8cffc44718e51d746497e1c7eedcd
+Author: ptitSeb <sebastien.chev@gmail.com>
+Author Date: Thu Oct 29 2020 17:32:18 GMT+0100 (heure normale d’Europe centrale)
+Committer: ptitSeb <sebastien.chev@gmail.com>
+Committer Date: Thu Oct 29 2020 17:32:25 GMT+0100 (heure normale d’Europe centrale) 
+
+[GLES2] added gl_ClipVertex handling even without use clip planes (for #215)
