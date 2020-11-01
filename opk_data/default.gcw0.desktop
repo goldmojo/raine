@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Raine
+Comment=Play arcade games
+Exec=raine.sh %f
+Icon=raine
+Terminal=false
+Type=Application
+Categories=emulators;
+StartupNotify=false

@@ -1,0 +1,12 @@
+*.o
+*.P
+source/version.h
+m68kmake
+m68kops.c
+m68kops.h
+
+locale
+raine
+
+output
+raine.opk
