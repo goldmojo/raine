@@ -64,6 +64,7 @@ HAS_CONSOLE = 1
 # target=i686-w64-mingw32
 # target=x86_64-w64-mingw32
 # target=i686-pc-msdosdjgpp
+target=gcw0
 
 # compile bezels (artwork) support ? (ignored if building neocd)
 # This option hasn't been tested for ages, not sure it still works
@@ -76,9 +77,15 @@ ifdef target
 	CROSSCOMPILE = 1
 	# I don't think anyone would want another native here ?
 	NATIVE=linux-gnu-sdl
-ifeq ("${target}","x86_64-w64-mingw32")
-	NO_ASM = 1
-endif
+	ifeq ("${target}","x86_64-w64-mingw32")
+		NO_ASM = 1
+	endif
+	ifeq ("${target}","gcw0")
+		VERBOSE = 1
+		USE_CURL =
+		NO_ASM = 1
+		DESTDIR = "./output"
+	endif
 endif
 
 ifdef NO_ASM
@@ -103,6 +110,13 @@ ifdef target
 CC=${target}-gcc
 CXX=${target}-g++
 INCDIR = -I/usr/${target}/include
+STRIP = strip
+ifeq ("${target}","gcw0")
+	CC=/opt/gcw0-toolchain/usr/bin/mipsel-linux-gcc -std=c11
+	CXX=/opt/gcw0-toolchain/usr/bin/mipsel-linux-g++ -std=c++11 -L/home/philippe/src/GLU/lib -L/home/philippe/src/gl4es/lib -L/home/philippe/src/muparser/lib
+	INCDIR = -I/home/philippe/src/GLU/include -I/home/philippe/src/gl4es/include -I/home/philippe/src/muparser/include
+	STRIP = /opt/gcw0-toolchain/usr/bin/mipsel-linux-strip
+endif
 else
 CC=gcc
 CXX=g++
@@ -393,13 +407,17 @@ endif
    AFLAGS = -f elf -O1 -D__RAINE__ \
 	   -DRAINE_UNIX
 
+ifeq ("${target}","gcw0")
+   PNG_CFLAGS = "$(shell /home/philippe/src/ROGUE_toolchain/output/host/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --cflags)"
+else
    PNG_CFLAGS = "$(shell libpng-config --cflags)"
+endif
+
 ifndef SDL
 ALLEGRO_CFLAGS = "$(shell allegro-config --cflags)"
 endif
 
    INCDIR += $(PNG_CFLAGS) $(ALLEGRO_CFLAGS) -I$(X11BASE)/include -I$(LOCALBASE)/include
-
 
    DEFINE = -D__RAINE__ \
 	   -DRAINE_UNIX
@@ -417,6 +435,11 @@ else
    LIBS = -lz $(shell libpng-config --ldflags) -lm
    LIBS_DEBUG = -lz $(shell libpng-config --ldflags) -lm
    LIBS_STATIC = -lz $(shell libpng-config --static --ldflags) -lm
+endif
+ifeq ("${target}","gcw0")
+   LIBS = -lz -lintl $(shell /home/philippe/src/ROGUE_toolchain/output/host/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --ldflags) -lm
+   LIBS_DEBUG = -lz -lintl $(shell /home/philippe/src/ROGUE_toolchain/output/host/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --ldflags) -lm
+   LIBS_STATIC = -lz -lintl $(shell /home/philippe/src/ROGUE_toolchain/output/host/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --static --ldflags) -lm
 endif
 ifndef DARWIN
 	LIBS += -lGL -lGLU
@@ -583,11 +606,15 @@ endif
 
 ifdef RAINE_UNIX
 	# windows uses /usr/include so it's handy when cross compiling from linux
-ifeq ($(wildcard /usr/include/muParser),)
-	INCDIR += -I/usr/local/include/muParser
-else
-	INCDIR += -I/usr/include/muParser
-endif
+	ifeq ($(wildcard /usr/include/muParser),)
+		ifneq ("${target}","gcw0")
+			INCDIR += -I/usr/local/include/muParser
+		endif
+	else
+		ifneq ("${target}","gcw0")
+			INCDIR += -I/usr/include/muParser
+		endif
+	endif
 endif
 
 ifdef USE_MUSASHI
@@ -1335,7 +1362,7 @@ grabber: raine.dat
 	   grabber raine.dat
 
 compress: $(RAINE_EXE)
-	   @strip $(RAINE_EXE)
+	   @$(STRIP) $(RAINE_EXE)
 	   @echo Appending datafile...
 	   exedat -a -c $(RAINE_EXE) raine.dat
 	   upx -9 $(RAINE_EXE)
@@ -1559,7 +1586,7 @@ vclean:
 
 # Installation part (Only for Unix)
 install: install_dirs $(RAINE_LNG) $(RAINE_EXE)
-	strip $(RAINE_EXE)
+	$(STRIP) $(RAINE_EXE)
 ifdef RAINE_UNIX
 	@echo installing $(RAINE_EXE) in $(bindir)
 	$(INSTALL_BIN) $(RAINE_EXE) $(bindir)
@@ -1612,7 +1639,9 @@ source/Musashi/m68kops.c source/Musashi/m68kops.h: $(OBJDIR)/Musashi/m68kmake
 
 $(OBJDIR)/Musashi/m68kmake: $(OBJDIR)/Musashi/m68kmake.o
 ifdef CROSSCOMPILE
-	cp -fv $(NATIVE)/object/Musashi/m68kmake $(OBJDIR)/Musashi
+	# Strange : $(NATIVE)/object/Musashi/m68kmake must be compiled for NATIVE HOST manually first
+	make -C source/Musashi
+	cp -fv source/Musashi/m68kmake $(OBJDIR)/Musashi
 else
 	$(LD) -o $@ $<
 endif
