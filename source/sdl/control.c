@@ -129,8 +129,22 @@ struct DEF_INPUT def_input[KB_DEF_COUNT] =
 #ifdef RAINE_WIN32
  { SDLK_3,       JOY(1,0,10,0), 0, "Def Coin A",P1S        },      // KB_DEF_COIN1,
 #else
- { SDLK_z,       JOY(1,0,10,0), 0, "Def Coin A",P1S        },      // KB_DEF_COIN1,
+ #ifdef GCW0
+  { SDLK_ESCAPE, JOY(1,0,10,0), 0, "Def Coin A",P1S        },      // KB_DEF_COIN1 => SELECT
+ #else
+  { SDLK_z,      JOY(1,0,10,0), 0, "Def Coin A",P1S        },      // KB_DEF_COIN1,
+ #endif
 #endif
+
+#ifdef GCW0
+ { 0x00,       JOY(2,0,10,0), 0, "Def Coin B",P2S        },      // KB_DEF_COIN2,
+ { 0x00,       JOY(3,0,10,0), 0, "Def Coin C",P3S        },      // KB_DEF_COIN3,
+ { 0x00,       JOY(4,0,10,0), 0, "Def Coin D",P4S        },      // KB_DEF_COIN4,
+
+ { 0x00,       0x00, 0, "Def Tilt",    SYS      },      // KB_DEF_TILT,
+ { 0x00,       0x00, 0, "Def Service", SYS      },      // KB_DEF_SERVICE,
+ { 0x00,       0x00, 0, "Def Test",    SYS      },      // KB_DEF_TEST,
+#else
  { SDLK_4,       JOY(2,0,10,0), 0, "Def Coin B",P2S        },      // KB_DEF_COIN2,
  { SDLK_7,       JOY(3,0,10,0), 0, "Def Coin C",P3S        },      // KB_DEF_COIN3,
  { SDLK_8,       JOY(4,0,10,0), 0, "Def Coin D",P4S        },      // KB_DEF_COIN4,
@@ -138,11 +152,16 @@ struct DEF_INPUT def_input[KB_DEF_COUNT] =
  { SDLK_t,       0x00, 0, "Def Tilt",    SYS      },      // KB_DEF_TILT,
  { SDLK_y,       0x00, 0, "Def Service", SYS      },      // KB_DEF_SERVICE,
  { SDLK_u,       0x00, 0, "Def Test",    SYS      },      // KB_DEF_TEST,
+#endif
 
 #ifdef RAINE_WIN32
  { SDLK_1,       JOY(1,0,9,0), 0, "Def P1 Start",P1S      },      // KB_DEF_P1_START,
 #else
- { SDLK_a,       JOY(1,0,9,0), 0, "Def P1 Start",P1S      },      // KB_DEF_P1_START,
+ #ifdef GCW0
+  { SDLK_RETURN,       JOY(1,0,9,0), 0, "Def P1 Start",P1S      },      // KB_DEF_P1_START => START
+ #else
+  { SDLK_a,       JOY(1,0,9,0), 0, "Def P1 Start",P1S      },      // KB_DEF_P1_START,
+ #endif
 #endif
 
  { SDLK_UP,      JOY(1,AXIS_LEFT(1),0,0), 0, "Def P1 Up",P1D         },      // KB_DEF_P1_UP,
@@ -150,6 +169,16 @@ struct DEF_INPUT def_input[KB_DEF_COUNT] =
  { SDLK_LEFT,    JOY(1,AXIS_LEFT(0),0,0), 0, "Def P1 Left",P1D       },      // KB_DEF_P1_LEFT,
  { SDLK_RIGHT,   JOY(1,AXIS_RIGHT(0),0,0), 0, "Def P1 Right",P1D      },      // KB_DEF_P1_RIGHT,
 
+#ifdef GCW0
+ { SDLK_LCTRL,       JOY(1,0,1,0), 1, "Def P1 Button 1", P1B      },      // KB_DEF_P1_B1 => A
+ { SDLK_LALT,        JOY(1,0,2,0), 3, "Def P1 Button 2", P1B      },      // KB_DEF_P1_B2 => B
+ { SDLK_SPACE,       JOY(1,0,3,0), 2, "Def P1 Button 3", P1B      },      // KB_DEF_P1_B3 => X
+ { SDLK_LSHIFT,      JOY(1,0,4,0), 0, "Def P1 Button 4", P1B      },      // KB_DEF_P1_B4 => Y
+ { SDLK_TAB,         JOY(1,0,5,0), 0, "Def P1 Button 5", P1B      },      // KB_DEF_P1_B5 => L1
+ { SDLK_BACKSPACE,   JOY(1,0,6,0), 0, "Def P1 Button 6", P1B      },      // KB_DEF_P1_B6 => R1
+ { 0x00,             JOY(1,0,7,0), 0, "Def P1 Button 7", P1B      },      // KB_DEF_P1_B7
+ { 0x00,             JOY(1,0,8,0), 0, "Def P1 Button 8", P1B      },      // KB_DEF_P1_B8
+#else
  { SDLK_v,       JOY(1,0,1,0), 1, "Def P1 Button 1", P1B      },      // KB_DEF_P1_B1,
  { SDLK_b,       JOY(1,0,2,0), 3, "Def P1 Button 2", P1B      },      // KB_DEF_P1_B2,
  { SDLK_n,       JOY(1,0,3,0), 2, "Def P1 Button 3", P1B      },      // KB_DEF_P1_B3,
@@ -158,7 +187,114 @@ struct DEF_INPUT def_input[KB_DEF_COUNT] =
  { SDLK_j,       JOY(1,0,6,0), 0, "Def P1 Button 6", P1B      },      // KB_DEF_P1_B6,
  { SDLK_m,       JOY(1,0,7,0), 0, "Def P1 Button 7", P1B      },      // KB_DEF_P1_B7,
  { SDLK_k,       JOY(1,0,8,0), 0, "Def P1 Button 8", P1B      },      // KB_DEF_P1_B8,
+#endif
 
+#ifdef GCW0
+ { 0x00,       JOY(2,0,9,0), 0, "Def P2 Start", P2S        },      // KB_DEF_P2_START,
+
+ { 0x00,       JOY(2,AXIS_LEFT(1),0,0), 0, "Def P2 Up", P2D            },      // KB_DEF_P2_UP,
+ { 0x00,       JOY(2,AXIS_RIGHT(1),0,0), 0, "Def P2 Down", P2D          },      // KB_DEF_P2_DOWN,
+ { 0x00,       JOY(2,AXIS_LEFT(0),0,0), 0, "Def P2 Left", P2D          },      // KB_DEF_P2_LEFT,
+ { 0x00,       JOY(2,AXIS_RIGHT(0),0,0), 0, "Def P2 Right", P2D         },      // KB_DEF_P2_RIGHT,
+
+ { 0x00,       JOY(2,0,1,0), 0, "Def P2 Button 1", P2B      },      // KB_DEF_P2_B1,
+ { 0x00,       JOY(2,0,2,0), 0, "Def P2 Button 2", P2B      },      // KB_DEF_P2_B2,
+ { 0x00,       JOY(2,0,3,0), 0, "Def P2 Button 3", P2B      },      // KB_DEF_P2_B3,
+ { 0x00,       JOY(2,0,4,0), 0, "Def P2 Button 4", P2B      },      // KB_DEF_P2_B4,
+ { 0x00,       JOY(2,0,5,0), 0, "Def P2 Button 5", P2B      },      // KB_DEF_P2_B5,
+ { 0x00,       JOY(2,0,6,0), 0, "Def P2 Button 6", P2B      },      // KB_DEF_P2_B6,
+ { 0x00,       JOY(2,0,7,0), 0, "Def P2 Button 7", P2B      },      // KB_DEF_P2_B7,
+ { 0x00,       JOY(2,0,8,0), 0, "Def P2 Button 8", P2B      },      // KB_DEF_P2_B8,
+
+ { 0x00,       JOY(3,0,9,0), 0, "Def P3 Start",P3S         },      // KB_DEF_P3_START,
+
+ { 0,       JOY(3,AXIS_LEFT(1),0,0), 0, "Def P3 Up", P3D            },      // KB_DEF_P2_UP,
+ { 0,       JOY(3,AXIS_RIGHT(1),0,0), 0, "Def P3 Down", P3D          },      // KB_DEF_P2_DOWN,
+ { 0,       JOY(3,AXIS_LEFT(0),0,0), 0, "Def P3 Left", P3D          },      // KB_DEF_P2_LEFT,
+ { 0,       JOY(3,AXIS_RIGHT(0),0,0), 0, "Def P3 Right", P3D         },      // KB_DEF_P2_RIGHT,
+
+ { 0x00,        JOY(3,0,1,0), 0, "Def P3 Button 1", P3B      },      // KB_DEF_P3_B1,
+ { 0x00,        JOY(3,0,2,0), 0, "Def P3 Button 2", P3B      },      // KB_DEF_P3_B2,
+ { 0x00,        JOY(3,0,3,0), 0, "Def P3 Button 3", P3B      },      // KB_DEF_P3_B3,
+ { 0x00,        JOY(3,0,4,0), 0, "Def P3 Button 4", P3B      },      // KB_DEF_P3_B4,
+ { 0x00,        JOY(3,0,5,0), 0, "Def P3 Button 5", P3B      },      // KB_DEF_P3_B5,
+ { 0x00,        JOY(3,0,6,0), 0, "Def P3 Button 6", P3B      },      // KB_DEF_P3_B6,
+ { 0x00,        JOY(3,0,7,0), 0, "Def P3 Button 7", P3B      },      // KB_DEF_P3_B7,
+ { 0x00,        JOY(3,0,8,0), 0, "Def P3 Button 8", P3B      },      // KB_DEF_P3_B8,
+
+ { 0x00,       JOY(4,0,9,0), 0, "Def P4 Start", P4S         },      // KB_DEF_P4_START,
+
+ { 0,       JOY(4,AXIS_LEFT(1),0,0), 0, "Def P4 Up", P4D            },      // KB_DEF_P2_UP,
+ { 0,       JOY(4,AXIS_RIGHT(1),0,0), 0, "Def P4 Down", P4D          },      // KB_DEF_P2_DOWN,
+ { 0,       JOY(4,AXIS_LEFT(0),0,0), 0, "Def P4 Left", P4D          },      // KB_DEF_P2_LEFT,
+ { 0,       JOY(4,AXIS_RIGHT(0),0,0), 0, "Def P4 Right", P4D         },      // KB_DEF_P2_RIGHT,
+
+ { 0x00,        JOY(4,0,1,0), 0, "Def P4 Button 1", P4B      },      // KB_DEF_P4_B1,
+ { 0x00,        JOY(4,0,2,0), 0, "Def P4 Button 2", P4B      },      // KB_DEF_P4_B2,
+ { 0x00,        JOY(4,0,3,0), 0, "Def P4 Button 3", P4B      },      // KB_DEF_P4_B3,
+ { 0x00,        JOY(4,0,4,0), 0, "Def P4 Button 4", P4B      },      // KB_DEF_P4_B4,
+ { 0x00,        JOY(4,0,5,0), 0, "Def P4 Button 5", P4B      },      // KB_DEF_P4_B5,
+ { 0x00,        JOY(4,0,6,0), 0, "Def P4 Button 6", P4B      },      // KB_DEF_P4_B6,
+ { 0x00,        JOY(4,0,7,0), 0, "Def P4 Button 7", P4B      },      // KB_DEF_P4_B7,
+ { 0x00,        JOY(4,0,8,0), 0, "Def P4 Button 8", P4B      },      // KB_DEF_P4_B8,
+
+ { 0x00,       0x00, 0, "Def Flipper 1 Left", P1B   },      // KB_DEF_FLIPPER_1_L,
+ { 0x00,       0x00, 0, "Def Flipper 1 Right", P1B  },      // KB_DEF_FLIPPER_1_R,
+ { 0x00,       0x00, 0, "Def Flipper 2 Left", P2B   },      // KB_DEF_FLIPPER_2_L,
+ { 0x00,       0x00, 0, "Def Flipper 2 Right", P2B  },      // KB_DEF_FLIPPER_2_R,
+ { 0x00,       0x00, 0, "Def Tilt Left", SYS        },      // KB_DEF_TILT_L,
+ { 0x00,       0x00, 0, "Def Tilt Right", SYS       },      // KB_DEF_TILT_R,
+ { 0x00,       0x00, 0, "Def Button 1 Left", P1B    },      // KB_DEF_B1_L,
+ { 0x00,       0x00, 0, "Def Button 1 Right", P1B   },      // KB_DEF_B1_R,
+
+ // Mahjong controls, at least in mahjong quest...
+ { 0x00,       0x00, 0, "Def P1 A", P1B             }, // KB_DEF_P1_A
+ { 0x00,       0x00, 0, "Def P1 E", P1B             }, // KB_DEF_P1_E
+ { 0x00,       0x00, 0, "Def P1 I", P1B             }, // KB_DEF_P1_I
+ { 0x00,       0x00, 0, "Def P1 M", P1B             }, // KB_DEF_P1_M
+ { 0x00,       0x00, 0, "Def P1 Kan", P1B           }, // KB_DEF_P1_KAN
+ { 0x00,       0x00, 0, "Def P1 B", P1B             }, // KB_DEF_P1_B
+ { 0x00,       0x00, 0, "Def P1 F", P1B             }, // KB_DEF_P1_F
+ { 0x00,       0x00, 0, "Def P1 J", P1B             }, // KB_DEF_P1_J
+ { 0x00,       0x00, 0, "Def P1 N", P1B             }, // KB_DEF_P1_N
+ { 0x00,       0x00, 0, "Def P1 Reach", P1B         }, // KB_DEF_P1_REACH
+ { 0x00,       0x00, 0, "Def P1 C", P1B             }, // KB_DEF_P1_C
+ { 0x00,       0x00, 0, "Def P1 G", P1B             }, // KB_DEF_P1_G
+ { 0x00,       0x00, 0, "Def P1 K", P1B             }, // KB_DEF_P1_K
+ { 0x00,       0x00, 0, "Def P1 Chi", P1B           }, // KB_DEF_P1_CHI
+ { 0x00,       0x00, 0, "Def P1 Ron", P1B           }, // KB_DEF_P1_RON,
+ { 0x00,       0x00, 0, "Def P1 D", P1B             }, // KB_DEF_P1_D
+ { 0x00,       0x00, 0, "Def P1 H", P1B             }, // KB_DEF_P1_H
+ { 0x00,       0x00, 0, "Def P1 L", P1B             }, // KB_DEF_P1_L
+ { 0x00,       0x00, 0, "Def P1 Pon", P1B           }, // KB_DEF_P1_PON
+
+ { 0,           0, 0, "Def Service A", SYS }, // KB_DEF_SERVICE_A
+ { 0,           0, 0, "Def Service B", SYS }, // KB_DEF_SERVICE_B
+ { 0,           0, 0, "Def Service C", SYS }, // KB_DEF_SERVICE_C
+
+ { 0x00,       0x00, 0, "Def Button 2 Left", P2B    },      // KB_DEF_B2_L,
+ { 0x00,    0x00, 0, "Def Button 2 Right", P2B   },      // KB_DEF_B2_R,
+
+ { 0,           0, 0, "Player1 B1+B2", P1C }, // p1_b1B2
+ { 0,           0, 0, "Player1 B3+B4", P1C },
+ { 0,           0, 0, "Player1 B2+B3", P1C },
+ { 0,           0, 0, "Player1 B1+B2+B3", P1C },
+ { 0,           0, 0, "Player1 B2+B3+B4", P1C },
+
+ { 0,           0, 0, "Player2 B1+B2", P2C }, // p2_b1B2
+ { 0,           0, 0, "Player2 B3+B4", P2C },
+ { 0,           0, 0, "Player2 B2+B3", P2C },
+ { 0,           0, 0, "Player2 B1+B2+B3", P2C },
+ { 0,           0, 0, "Player2 B2+B3+B4", P2C },
+ { 0,           0, 0, "Player1 B4+B5+B6", P1C },
+
+ { 0,           0, 0, "Next Game", SYS },
+ { 0,           0, 0, "Prev Game", SYS },
+
+ { 0,           0, 0, "", }, // unknown, should be hidden
+ { 0,           0, 0, "", }, // special, should be hidden
+ { 0,           0, 0, "", }, // unused, should be hidden
+#else
  { SDLK_2,       JOY(2,0,9,0), 0, "Def P2 Start", P2S        },      // KB_DEF_P2_START,
 
  { SDLK_s,       JOY(2,AXIS_LEFT(1),0,0), 0, "Def P2 Up", P2D            },      // KB_DEF_P2_UP,
@@ -263,6 +399,7 @@ struct DEF_INPUT def_input[KB_DEF_COUNT] =
  { 0,           0, 0, "", }, // unknown, should be hidden
  { 0,           0, 0, "", }, // special, should be hidden
  { 0,           0, 0, "", }, // unused, should be hidden
+#endif
 };
 
 /******************************************************************************/
@@ -285,7 +422,11 @@ static void key_quit() {
 
 static void frame_skip_up(void)
 {
+  #ifdef GCW0
+   if(display_cfg.frame_skip<9){
+  #else
    if((display_cfg.frame_skip<9) && (display_cfg.frame_skip)){
+  #endif
       display_cfg.frame_skip++;
       print_ingame(120,gettext("Drawing Every %1d Frames"),display_cfg.frame_skip);
    }
@@ -293,6 +434,20 @@ static void frame_skip_up(void)
 
 static void frame_skip_down(void)
 {
+  #ifdef GCW0
+   if(display_cfg.frame_skip>0){
+    display_cfg.frame_skip--;
+    if(display_cfg.frame_skip==1)
+      print_ingame(120,gettext("Drawing All Frames"));
+    else
+    {
+     if(display_cfg.frame_skip==0)
+      print_ingame(120,gettext("Auto frameskip"));
+     else
+	    print_ingame(120,gettext("Drawing Every %1d Frames"),display_cfg.frame_skip);
+    }
+   }
+  #else
    if((display_cfg.frame_skip>1) && (display_cfg.frame_skip)){
       display_cfg.frame_skip--;
       if(display_cfg.frame_skip==1)
@@ -300,6 +455,7 @@ static void frame_skip_down(void)
       else
 	 print_ingame(120,gettext("Drawing Every %1d Frames"),display_cfg.frame_skip);
    }
+  #endif
 }
 
 extern void cpu_speed_up(); // emumain.c
@@ -384,37 +540,67 @@ static void cold_boot() {
 // must be global for the controls dialog
 struct DEF_INPUT_EMU def_input_emu[] =
 {
- { SDLK_s | (KMOD_LCTRL<<16),       0x00,           _("Save Screenshot"), key_save_screen     },
- { SDLK_RETURN | (KMOD_LCTRL<<16),       0x00,           _("Fullscreen"), toggle_fullscreen     },
- { SDLK_PAGEUP,    0x00,           _("Increase frameskip"), frame_skip_up  },
- { SDLK_PAGEDOWN,    0x00,           _("Decrease frameskip"), frame_skip_down  },
- { SDLK_HOME,    0x00,           _("Increase cpu skip"),    cpu_speed_up},
- { SDLK_END,     0x00,           _("Decrease cpu skip"),    cpu_slow_down},
- // You must keep this one the 6th input, see special handling (KEYUP event)
- { SDLK_DELETE,  0x00,           _("Toggle limit speed"),   toggle_limit_speed},
- { SDLK_F2,      0x00,           _("Save game"),            GameSave},
- { SDLK_F3,      0x00,           _("Switch save slot"),     next_save_slot},
- { SDLK_F4,      0x00,           _("Load game"),            GameLoad},
-#ifdef DARWIN
- { SDLK_F12,     0x00,           _("Switch fps display"),   switch_fps_mode},
-#else
- { SDLK_F11,     0x00,           _("Switch fps display"),   switch_fps_mode},
-#endif
- { SDLK_F1,      0x00,           _("Reset game"),           cold_boot},
- { SDLK_p,       0x00,           _("Pause game"),           key_pause_game},
- { SDLK_ESCAPE,     0x00,           _("Stop emulation"),    key_stop_emulation_esc},
- { SDLK_TAB,     0x00,           _("Return to gui"),        key_stop_emulation_tab},
- // { SDLK_WORLD_18,   0x00,           _("Switch Mixer"), switch_mixer },
- { SDLK_F2 | (KMOD_CTRL<<16), 0x00, _("Save game with name"), GameSaveName },
- { SDLK_F4 | (KMOD_CTRL<<16), 0x00, _("Load game with name"), GameLoadName },
- { SDLK_F2 | (KMOD_SHIFT<<16), 0x00, _("Save demo"), GameSaveDemo },
- { SDLK_F4 | (KMOD_SHIFT<<16), 0x00, _("Load demo"), GameLoadDemo },
- { SDLK_SPACE, 0x00, _("Fwd 1 frame in pause"), key_pause_fwd},
-#ifdef HAS_CONSOLE
- { 31 /* TILDE */, 0x00, _("Console"), call_console},
-#endif
- { SDLK_c | (KMOD_ALT<<16), 0x00, _("Cheats"), call_cheats},
- { SDLK_F4 | (KMOD_ALT<<16),       0x00,           _("Quit w/o saving"), key_quit     },
+ #ifdef GCW0
+  { 0x00,       0x00,           _("Save Screenshot"), key_save_screen     },
+  { 0x00,       0x00,           _("Fullscreen"), toggle_fullscreen     },
+  { SDLK_PAGEDOWN,    0x00,           _("Increase frameskip"), frame_skip_up  }, // R2
+  { SDLK_PAGEUP,    0x00,           _("Decrease frameskip"), frame_skip_down  }, // L2
+  { 0x00,    0x00,           _("Increase cpu skip"),    cpu_speed_up},
+  { 0x00,     0x00,           _("Decrease cpu skip"),    cpu_slow_down},
+  // You must keep this one the 6th input, see special handling (KEYUP event)
+  { 0x00,  0x00,           _("Toggle limit speed"),   toggle_limit_speed},
+  { 0x00,      0x00,           _("Save game"),            GameSave},
+  { 0x00,      0x00,           _("Switch save slot"),     next_save_slot},
+  { 0x00,      0x00,           _("Load game"),            GameLoad},
+  { SDLK_KP_PERIOD,     0x00,           _("Switch fps display"),   switch_fps_mode}, // R3
+  { 0x00,      0x00,           _("Reset game"),           cold_boot},
+  { 0x00,       0x00,           _("Pause game"),           key_pause_game},
+  { SDLK_HOME,     0x00,           _("Stop emulation"),    key_stop_emulation_esc}, // POWER
+  { 0x00,     0x00,           _("Return to gui"),        key_stop_emulation_tab},
+  // { SDLK_WORLD_18,   0x00,           _("Switch Mixer"), switch_mixer },
+  { 0x00, 0x00, _("Save game with name"), GameSaveName },
+  { 0x00, 0x00, _("Load game with name"), GameLoadName },
+  { 0x00, 0x00, _("Save demo"), GameSaveDemo },
+  { 0x00, 0x00, _("Load demo"), GameLoadDemo },
+  { 0x00, 0x00, _("Fwd 1 frame in pause"), key_pause_fwd},
+  #ifdef HAS_CONSOLE
+  { 0x00, 0x00, _("Console"), call_console},
+  #endif
+  { 0x00, 0x00, _("Cheats"), call_cheats},
+  { 0x00,       0x00,           _("Quit w/o saving"), key_quit     },
+ #else
+  { SDLK_s | (KMOD_LCTRL<<16),       0x00,           _("Save Screenshot"), key_save_screen     },
+  { SDLK_RETURN | (KMOD_LCTRL<<16),       0x00,           _("Fullscreen"), toggle_fullscreen     },
+  { SDLK_PAGEUP,    0x00,           _("Increase frameskip"), frame_skip_up  },
+  { SDLK_PAGEDOWN,    0x00,           _("Decrease frameskip"), frame_skip_down  },
+  { SDLK_HOME,    0x00,           _("Increase cpu skip"),    cpu_speed_up},
+  { SDLK_END,     0x00,           _("Decrease cpu skip"),    cpu_slow_down},
+  // You must keep this one the 6th input, see special handling (KEYUP event)
+  { SDLK_DELETE,  0x00,           _("Toggle limit speed"),   toggle_limit_speed},
+  { SDLK_F2,      0x00,           _("Save game"),            GameSave},
+  { SDLK_F3,      0x00,           _("Switch save slot"),     next_save_slot},
+  { SDLK_F4,      0x00,           _("Load game"),            GameLoad},
+  #ifdef DARWIN
+  { SDLK_F12,     0x00,           _("Switch fps display"),   switch_fps_mode},
+  #else
+  { SDLK_F11,     0x00,           _("Switch fps display"),   switch_fps_mode},
+  #endif
+  { SDLK_F1,      0x00,           _("Reset game"),           cold_boot},
+  { SDLK_p,       0x00,           _("Pause game"),           key_pause_game},
+  { SDLK_ESCAPE,     0x00,           _("Stop emulation"),    key_stop_emulation_esc},
+  { SDLK_TAB,     0x00,           _("Return to gui"),        key_stop_emulation_tab},
+  // { SDLK_WORLD_18,   0x00,           _("Switch Mixer"), switch_mixer },
+  { SDLK_F2 | (KMOD_CTRL<<16), 0x00, _("Save game with name"), GameSaveName },
+  { SDLK_F4 | (KMOD_CTRL<<16), 0x00, _("Load game with name"), GameLoadName },
+  { SDLK_F2 | (KMOD_SHIFT<<16), 0x00, _("Save demo"), GameSaveDemo },
+  { SDLK_F4 | (KMOD_SHIFT<<16), 0x00, _("Load demo"), GameLoadDemo },
+  { SDLK_SPACE, 0x00, _("Fwd 1 frame in pause"), key_pause_fwd},
+  #ifdef HAS_CONSOLE
+  { 31 /* TILDE */, 0x00, _("Console"), call_console},
+  #endif
+  { SDLK_c | (KMOD_ALT<<16), 0x00, _("Cheats"), call_cheats},
+  { SDLK_F4 | (KMOD_ALT<<16),       0x00,           _("Quit w/o saving"), key_quit     },
+ #endif
 };
 
 struct INPUT InputList[MAX_INPUTS];	// Max 64 control inputs in a game
