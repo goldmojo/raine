@@ -1,0 +1,40 @@
+* COIN 1
+
+SELECT       SDLK_ESCAPE
+
+* START 1
+
+START        SDLK_RETURN
+
+* MOVES
+
+UP           SDLK_UP
+DOWN         SDLK_DOWN
+LEFT         SDLK_LEFT
+RIGHT        SDLK_RIGHT
+
+* BUTTONS
+
+A            SDLK_LCTRL
+B            SDLK_LALT
+X            SDLK_SPACE
+Y            SDLK_LSHIFT
+L1           SDLK_TAB
+R1           SDLK_BACKSPACE
+
+* FRAME SKIP (-/+)
+
+L2           SDLK_PAGEUP
+R2           SDLK_PAGEDOWN
+
+* SHOW FPS
+
+R3           SDLK_KP_PERIOD
+
+* STOP
+
+POWER        SDLK_HOME
+
+* UNUSED
+
+L3           SDLK_KP_DIVIDE

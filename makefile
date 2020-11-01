@@ -112,8 +112,8 @@ CXX=${target}-g++
 INCDIR = -I/usr/${target}/include
 STRIP = strip
 ifeq ("${target}","gcw0")
-	CC=/opt/gcw0-toolchain/usr/bin/mipsel-linux-gcc -std=c11
-	CXX=/opt/gcw0-toolchain/usr/bin/mipsel-linux-g++ -std=c++11 -L/home/philippe/src/GLU/lib -L/home/philippe/src/gl4es/lib -L/home/philippe/src/muparser/lib
+	CC=/opt/gcw0-toolchain/usr/bin/mipsel-linux-gcc -std=c11 -DGCW0
+	CXX=/opt/gcw0-toolchain/usr/bin/mipsel-linux-g++ -std=c++11 -DGCW0 -L/home/philippe/src/GLU/lib -L/home/philippe/src/gl4es/lib -L/home/philippe/src/muparser/lib
 	INCDIR = -I/home/philippe/src/GLU/include -I/home/philippe/src/gl4es/include -I/home/philippe/src/muparser/include
 	STRIP = /opt/gcw0-toolchain/usr/bin/mipsel-linux-strip
 endif

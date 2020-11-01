@@ -1,0 +1,10 @@
+{
+    "C_Cpp.default.defines": [
+        "GCW0",
+        "HAS_CONSOLE",
+        "SDL"
+    ],
+    "C_Cpp.default.includePath": [
+        "F:\\Virtualbox_VMs\\share\\src\\GCW0_include\\SDL"
+    ]
+}

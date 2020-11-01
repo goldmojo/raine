@@ -1,0 +1,64 @@
+RAINE (680x0 Arcade Emulation) 0.91.10 (c)1998-2020(!) Raine Team
+
+CPU: 
+USE: Raine <commands> <options> [gamename]|[file]
+
+If you pass a file on the command line, it's assmued to be a neocd image,
+either a zip or 7z file containing the files which were in the neocd iso
+or a cue file (most usual)
+or an iso file, in this case audio files are autodetected
+
+Commands:
+
+-game/-g [gamename]            : Select a game to load (see game list)
+-rp "path"                   : use this path as 1st rom path
+-gamelist/-gl                  : Quick list of all games
+-gameinfo/-listinfo|-li <gamename> : List info for a game, or all games
+-romcheck/-rc <gamename>       : Check roms are valid for a game, or all games
+-romcheck-full/-rcf <gamename> : like romcheck, but load all the games, very slow now
+-help/-h/-?/--help             : Show command line options and list games
+-joystick/-j [type]            : Select joystick type (see list in raine.cfg)
+-limitspeed/-l                 : Limit emulation speed to 60fps
+-nogui/-n                      : Disable GUI (useful for frontends)
+-cont                          : Enable continuous playing
+-nocont                        : Disable continuous playing
+-autoload                      : Enable auto savegame loading
+-noautoload                    : Disable auto savegame loading
+-screenx/-sx [width]           : Select screen width
+-screeny/-sy [height]          : Select screen height
+-geometry [width][xheight][+posx][+posy] : window placement (implies -nb)
+-fullscreen/fs [0/1]           : Set fullscreen mode on/off
+-nb                            : No Border
+-wb                            : With Border
+-bpp/-depth [number]           : Select screen colour depth
+-rotate/-r [angle]             : Rotate screen 0,90,180 or 270 degrees
+-ror                           : Rotate screen 90 degrees
+-rol                           : Rotate screen 270 degrees
+-norotate/-nor                 : Ignore default rotation in game drivers
+-flip/-f [0-3]                 : Flip screen on none, x, y or x+y axis
+-flipx/-fx                     : Flip screen on x axis
+-flipy/-fy                     : Flip screen on y axis
+-noflip/-nof                   : Ignore default flipping in game drivers
+-nc                            : no curl (disable curl usage to download roms)
+-listdsw <gamename>            : List dipswitches for a game, or all games
+-region n			: set region to number n. Pass -1 for values
+-source_file/-lsf <gamename>   : list source file
+
+Options:
+
+-verbose                       : Show extra information for romcheck mainly
+
+SDL video options :
+
+-video/-vm n                   : Video mode : 0 = opengl, 1 = yuv overlays
+				  2 = normal blits
+OpenGL options :
+-render [0|1]                  : Renderer : 0 = DrawPixels, 1 = Texture
+-dbuf [0|1]                    : Double buffer : 0 = off, 1 = on
+-shader file                   : use file as shader
+-filter [0|1]                   : opengl filtering, 0 = GL_NEAREST, 1 = GL_LINEAR
+
+Other options are available only from the GUI/config file for now.
+
+Version: 0.91.10
+Games:   1069
