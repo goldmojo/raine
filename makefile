@@ -112,8 +112,16 @@ CXX=${target}-g++
 INCDIR = -I/usr/${target}/include
 STRIP = strip
 ifeq ("${target}","gcw0")
-	CC=/opt/gcw0-toolchain/usr/bin/mipsel-linux-gcc -std=c11 -DGCW0
-	CXX=/opt/gcw0-toolchain/usr/bin/mipsel-linux-g++ -std=c++11 -DGCW0 -L/home/philippe/src/GLU/lib -L/home/philippe/src/gl4es/lib -L/home/philippe/src/muparser/lib
+	CC=/opt/gcw0-toolchain/usr/bin/mipsel-linux-gcc -std=c11 -DGCW0 
+	CC += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
+	# PGO
+	# CC += -fprofile-generate=/media/data/local/home/PGO
+	CC += -fprofile-use
+	CXX=/opt/gcw0-toolchain/usr/bin/mipsel-linux-g++ -std=c++11 -DGCW0 -L/home/philippe/src/GLU/lib -L/home/philippe/src/gl4es/lib -L/home/philippe/src/muparser/lib 
+	CXX += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
+	# PGO
+	# CXX += -fprofile-generate=/media/data/local/home/PGO
+	CXX += -fprofile-use
 	INCDIR = -I/home/philippe/src/GLU/include -I/home/philippe/src/gl4es/include -I/home/philippe/src/muparser/include
 	STRIP = /opt/gcw0-toolchain/usr/bin/mipsel-linux-strip
 endif
@@ -172,6 +180,16 @@ ifeq ("$(LD)","ld")
   LD=$(CXX)
 endif
 endif
+endif
+
+ifeq ("${target}","gcw0")
+	LD += -Wl,--as-needed -Wl,--gc-sections -flto -s
+	# PGO
+	# LD += -lgcov 
+	# LD += -std=c11 -DGCW0 
+	# LD += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
+	# LD += -fprofile-generate=/media/data/local/home/PGO
+	LD += -fprofile-use
 endif
 
 WINDRES_V := $(shell windres --version 2>/dev/null)

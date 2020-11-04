@@ -81,7 +81,7 @@ extern void update_rjoy_list(void);
 extern void update_inputs(void);
 extern void update_gui_inputs(void);
 
-UINT32 cpu_fps;
+int cpu_fps;
 UINT32 quit_loop;
 
 int req_fwd;
@@ -147,7 +147,7 @@ FPSmanager fpsm;
 
 UINT32 run_game_emulation(void)
 {
-   UINT32 cpu_tick;
+   int cpu_tick;
    UINT32 draw_screen;
    const VIDEO_INFO *vid_info;
    char str[256];
