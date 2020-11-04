@@ -170,10 +170,10 @@ struct DEF_INPUT def_input[KB_DEF_COUNT] =
  { SDLK_RIGHT,   JOY(1,AXIS_RIGHT(0),0,0), 0, "Def P1 Right",P1D      },      // KB_DEF_P1_RIGHT,
 
 #ifdef GCW0
- { SDLK_LCTRL,       JOY(1,0,1,0), 1, "Def P1 Button 1", P1B      },      // KB_DEF_P1_B1 => A
+ { SDLK_LSHIFT,       JOY(1,0,1,0), 1, "Def P1 Button 1", P1B      },      // KB_DEF_P1_B1 => Y
  { SDLK_LALT,        JOY(1,0,2,0), 3, "Def P1 Button 2", P1B      },      // KB_DEF_P1_B2 => B
- { SDLK_SPACE,       JOY(1,0,3,0), 2, "Def P1 Button 3", P1B      },      // KB_DEF_P1_B3 => X
- { SDLK_LSHIFT,      JOY(1,0,4,0), 0, "Def P1 Button 4", P1B      },      // KB_DEF_P1_B4 => Y
+ { SDLK_LCTRL,       JOY(1,0,3,0), 2, "Def P1 Button 3", P1B      },      // KB_DEF_P1_B3 => A
+ { SDLK_SPACE,      JOY(1,0,4,0), 0, "Def P1 Button 4", P1B      },      // KB_DEF_P1_B4 => X
  { SDLK_TAB,         JOY(1,0,5,0), 0, "Def P1 Button 5", P1B      },      // KB_DEF_P1_B5 => L1
  { SDLK_BACKSPACE,   JOY(1,0,6,0), 0, "Def P1 Button 6", P1B      },      // KB_DEF_P1_B6 => R1
  { 0x00,             JOY(1,0,7,0), 0, "Def P1 Button 7", P1B      },      // KB_DEF_P1_B7

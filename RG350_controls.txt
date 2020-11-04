@@ -15,12 +15,12 @@ RIGHT        SDLK_RIGHT
 
 * BUTTONS
 
-A            SDLK_LCTRL
-B            SDLK_LALT
-X            SDLK_SPACE
-Y            SDLK_LSHIFT
-L1           SDLK_TAB
-R1           SDLK_BACKSPACE
+1   Y        SDLK_LSHIFT
+2   B        SDLK_LALT
+3   A        SDLK_LCTRL
+4   X        SDLK_SPACE
+5   L1       SDLK_TAB
+6   R1       SDLK_BACKSPACE
 
 * FRAME SKIP (-/+)
 
