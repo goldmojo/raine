@@ -49,11 +49,8 @@ void sound_load_cfg() {
    /* It's better to default to 44Khz in sdl in win32 because of the buggy sound drivers
       in this os (they oblige to have quite a big sound buffer, which produces a
       noticeable sound delay at low sampling rates */
-   #ifdef GCW0
-      audio_sample_rate= raine_get_config_int( "Sound",        "sample_rate",          22050 );
-   #else
-      audio_sample_rate= raine_get_config_int( "Sound",        "sample_rate",          44100 );
-   #endif
+   audio_sample_rate= raine_get_config_int( "Sound",        "sample_rate",          44100 );
+
 #if HAS_YM3812
 #ifdef RAINE_DOS
    use_emulated_ym3812  = raine_get_config_int( "Sound",        "YM3812Emulation",      1 );    // 0 = Hardware; 1 = Software
