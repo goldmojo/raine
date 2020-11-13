@@ -85,6 +85,10 @@ ifdef target
 		USE_CURL =
 		NO_ASM = 1
 		DESTDIR = "./output"
+		# Uncomment to build for OD BETA
+		OD_BETA = 1
+		# Choose profiling phase (PHASE = 1 or 2, 0 is inactive)
+		OD_PROFILE = 0
 	endif
 endif
 
@@ -114,16 +118,25 @@ STRIP = strip
 ifeq ("${target}","gcw0")
 	CC=/opt/gcw0-toolchain/usr/bin/mipsel-linux-gcc -std=c11 -DGCW0 
 	CC += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
-	# PGO
-	# CC += -fprofile-generate=/media/data/local/home/PGO
-	CC += -fprofile-use
-	CXX=/opt/gcw0-toolchain/usr/bin/mipsel-linux-g++ -std=c++11 -DGCW0 -L/home/philippe/src/GLU/lib -L/home/philippe/src/gl4es/lib -L/home/philippe/src/muparser/lib 
+	CXX=/opt/gcw0-toolchain/usr/bin/mipsel-linux-g++ -std=c++11 -DGCW0 -L/home/philippe/src/GLU/lib -L/home/philippe/src/gl4es/lib -L/home/philippe/src/muparser/lib
+	ifdef OD_BETA
+		CXX += -L/opt/gcw0-toolchain/mipsel-gcw0-linux-uclibc/sysroot/usr/lib
+	endif
 	CXX += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
-	# PGO
-	# CXX += -fprofile-generate=/media/data/local/home/PGO
-	CXX += -fprofile-use
+	# RG350 - PGO (optional, 2 steps)
+	# STEP 1 : create profile files
+	ifeq ("${OD_PROFILE}","1")
+		CC  += -fprofile-generate=/media/data/local/home/PGO
+		CXX += -fprofile-generate=/media/data/local/home/PGO
+	endif
+	# STEP 2 : use profile files
+	ifeq ("${OD_PROFILE}","2")
+		CC  += -fprofile-use -fprofile-dir=./PGO
+		CXX += -fprofile-use -fprofile-dir=./PGO
+	endif
 	INCDIR = -I/home/philippe/src/GLU/include -I/home/philippe/src/gl4es/include -I/home/philippe/src/muparser/include
 	STRIP = /opt/gcw0-toolchain/usr/bin/mipsel-linux-strip
+	HUGEEDIT = /opt/gcw0-toolchain/usr/bin/hugeedit
 endif
 else
 CC=gcc
@@ -184,12 +197,22 @@ endif
 
 ifeq ("${target}","gcw0")
 	LD += -Wl,--as-needed -Wl,--gc-sections -flto -s
-	# PGO
-	# LD += -lgcov 
-	# LD += -std=c11 -DGCW0 
-	# LD += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
-	# LD += -fprofile-generate=/media/data/local/home/PGO
-	LD += -fprofile-use
+	ifdef OD_BETA
+		# Add specific RG350 CPU optimizations (BETA FIRMWARE)
+		LD += -Wl,-zcommon-page-size=2097152 -Wl,-zmax-page-size=2097152 -lhugetlbfs
+	endif
+	# RG350 - PGO (optional, 2 steps)
+	# STEP 1 : create profile files
+	ifeq ("${OD_PROFILE}","1")
+		LD += -lgcov 
+		LD += -std=c11 -DGCW0 
+		LD += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
+		LD += -fprofile-generate=/media/data/local/home/PGO
+	endif
+	# STEP 2 : use profile files
+	ifeq ("${OD_PROFILE}","2")
+		LD += -fprofile-use -fprofile-dir=./PGO
+	endif
 endif
 
 WINDRES_V := $(shell windres --version 2>/dev/null)
@@ -1260,13 +1283,13 @@ locale/raine.pot:
 	rm -f locale/tmp
 
 locale/fr/LC_MESSAGES/raine.mo: locale/french.po
-	msgfmt -c -v -o $@ $<
+	/usr/bin/msgfmt -c -v -o $@ $<
 
 locale/it/LC_MESSAGES/raine.mo: locale/it.po
-	msgfmt -c -v -o $@ $<
+	/usr/bin/msgfmt -c -v -o $@ $<
 
 locale/es/LC_MESSAGES/raine.mo: locale/es.po
-	msgfmt -c -v -o $@ $<
+	/usr/bin/msgfmt -c -v -o $@ $<
 
 CFLAGS_BS := -Wall -O2 $(shell sdl-config --cflags) $(INCDIR) -DSTANDALONE -DNO_GZIP -c
 
@@ -1351,6 +1374,9 @@ endif
 
 	@echo Linking Raine...
 	$(LDV) $(LDFLAGS) $(LFLAGS) -g -Wall -Wno-write-strings -o $(RAINE_EXE) $^ $(LIBS)
+	@if [ "${OD_BETA}" = "1" ]; then\
+        $(HUGEEDIT) --text --data $(RAINE_EXE);\
+    fi
 
 $(D7Z)/%.o: source/7z/%.c
 	@echo Compiling 7z $<...
