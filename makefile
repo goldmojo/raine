@@ -449,7 +449,7 @@ endif
 	   -DRAINE_UNIX
 
 ifeq ("${target}","gcw0")
-   PNG_CFLAGS = "$(shell /home/philippe/src/ROGUE_toolchain/output/host/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --cflags)"
+   PNG_CFLAGS = "$(shell /opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --cflags)"
 else
    PNG_CFLAGS = "$(shell libpng-config --cflags)"
 endif
@@ -468,24 +468,25 @@ ifndef SDL
    LIBS_DEBUG = -lz $(shell allegro-config --libs ) $(shell libpng-config --ldflags) -lm
    LIBS_STATIC = -lz $(shell allegro-config --static) $(shell libpng-config --static --ldflags) -lm
 else
-ifdef DARWIN
-   LIBS = -lz /usr/local/lib/libpng.a -lm
-   LIBS_DEBUG = -lz /usr/local/lib/libpng.a -lm
-   LIBS_STATIC = -lz /usr/local/lib/libpng.a -lm
-else
-   LIBS = -lz $(shell libpng-config --ldflags) -lm
-   LIBS_DEBUG = -lz $(shell libpng-config --ldflags) -lm
-   LIBS_STATIC = -lz $(shell libpng-config --static --ldflags) -lm
-endif
-ifeq ("${target}","gcw0")
-   LIBS = -lz -lintl $(shell /home/philippe/src/ROGUE_toolchain/output/host/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --ldflags) -lm
-   LIBS_DEBUG = -lz -lintl $(shell /home/philippe/src/ROGUE_toolchain/output/host/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --ldflags) -lm
-   LIBS_STATIC = -lz -lintl $(shell /home/philippe/src/ROGUE_toolchain/output/host/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --static --ldflags) -lm
-endif
-ifndef DARWIN
-	LIBS += -lGL -lGLU
-	LIBS_DEBUG += -lGL -lGLU
-endif
+	ifdef DARWIN
+		LIBS = -lz /usr/local/lib/libpng.a -lm
+		LIBS_DEBUG = -lz /usr/local/lib/libpng.a -lm
+		LIBS_STATIC = -lz /usr/local/lib/libpng.a -lm
+	else
+		ifeq ("${target}","gcw0")
+			LIBS = -lz -lintl $(shell /opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --ldflags) -lm
+			LIBS_DEBUG = -lz -lintl $(shell /opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --ldflags) -lm
+			LIBS_STATIC = -lz -lintl $(shell /opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/bin/libpng-config --static --ldflags) -lm
+		else
+			LIBS = -lz $(shell libpng-config --ldflags) -lm
+			LIBS_DEBUG = -lz $(shell libpng-config --ldflags) -lm
+			LIBS_STATIC = -lz $(shell libpng-config --static --ldflags) -lm
+		endif
+	endif
+	ifndef DARWIN
+		LIBS += -lGL -lGLU
+		LIBS_DEBUG += -lGL -lGLU
+	endif
 endif
 
 ifndef SDL
