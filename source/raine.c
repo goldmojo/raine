@@ -281,7 +281,11 @@ int main(int argc,char *argv[])
    */
 
 #ifdef RAINE_UNIX
-   sprintf(dir_cfg.share_path, "/usr/share/games/raine/");
+   #ifdef GCW0
+      sprintf(dir_cfg.share_path, "%s/.raine/", getenv("HOME"));
+   #else
+      sprintf(dir_cfg.share_path, "/usr/share/games/raine/");
+   #endif
    sprintf(dir_cfg.exe_path, "%s/.raine/", getenv("HOME"));
 #else
 #if !defined(RAINE_WIN32) || defined(__MINGW32__)
@@ -638,7 +642,7 @@ int main(int argc,char *argv[])
 	"\n"
 	"ISSUES:\n"
 	"\n"
-	"þ This is an alpha release - I expect there are bugs and the\n"
+	"ï¿½ This is an alpha release - I expect there are bugs and the\n"
 	"  docs are a bit out of date. This is due to lack of time, a\n"
 	"  problem that will effect raine for these last few days of\n"
 	"  it's life.\n"
