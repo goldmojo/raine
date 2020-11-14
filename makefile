@@ -17,7 +17,7 @@
 VERSION = "0.91.10"
 
 # Comment out if you don't want the debug features
-# RAINE_DEBUG = 1
+RAINE_DEBUG = 1
 
 # Be verbose ?
 # VERBOSE = 1
@@ -119,9 +119,6 @@ ifeq ("${target}","gcw0")
 	CC=/opt/gcw0-toolchain/usr/bin/mipsel-linux-gcc -std=c11 -DGCW0 
 	CC += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
 	CXX=/opt/gcw0-toolchain/usr/bin/mipsel-linux-g++ -std=c++11 -DGCW0 -L/home/philippe/src/GLU/lib -L/home/philippe/src/gl4es/lib -L/home/philippe/src/muparser/lib
-	ifdef OD_BETA
-		CXX += -L/opt/gcw0-toolchain/mipsel-gcw0-linux-uclibc/sysroot/usr/lib
-	endif
 	CXX += -Ofast -fdata-sections -ffunction-sections -mno-fp-exceptions -mno-check-zero-division -fsingle-precision-constant -fno-common -march=mips32r2 -mtune=mips32r2 -flto -mno-shared -mplt
 	# RG350 - PGO (optional, 2 steps)
 	# STEP 1 : create profile files
