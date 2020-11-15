@@ -17,7 +17,7 @@
 VERSION = "0.91.10"
 
 # Comment out if you don't want the debug features
-RAINE_DEBUG = 1
+# RAINE_DEBUG = 1
 
 # Be verbose ?
 # VERBOSE = 1
@@ -81,6 +81,7 @@ ifdef target
 		NO_ASM = 1
 	endif
 	ifeq ("${target}","gcw0")
+		RAINE_DEBUG =
 		VERBOSE = 1
 		USE_CURL =
 		NO_ASM = 1
