@@ -2003,12 +2003,14 @@ void TMenu::execute() {
 		    event.resize.h != display_cfg.screen_y) && (!display_cfg.fullscreen || display_cfg.auto_mode_change)) {
 	    display_cfg.screen_x = event.resize.w;
 	    display_cfg.screen_y = event.resize.h;
+    #ifndef GCW0
 		if (keep_vga) {
 			if (display_cfg.screen_x < 640)
 				display_cfg.screen_x = 640;
 			if (display_cfg.screen_y < 480)
 				display_cfg.screen_y = 480;
 		}
+    #endif // GCW0
 	    resize(1);
 	    if (font) {
 		delete font;
@@ -2195,7 +2197,7 @@ void TDialog::display_fglayer_header(int &y) {
     else
       bg_layer = SDL_CreateRGBSurface(SDL_SWSURFACE,sdl_screen->w,sdl_screen->h,display_cfg.bpp,color_format->Rmask,color_format->Gmask,color_format->Bmask,color_format->Amask);
     if (!bg_layer) {
-      printf("erreur création bg_layer\n");
+      printf("erreur crï¿½ation bg_layer\n");
       exit(1);
     }
     SDL_BlitSurface(sdl_screen,NULL,bg_layer,NULL);

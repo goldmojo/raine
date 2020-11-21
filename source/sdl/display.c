@@ -79,7 +79,11 @@ void adjust_gui_resolution() {
       SDL_QuitSubSystem(SDL_INIT_VIDEO);
       SDL_InitSubSystem(SDL_INIT_VIDEO);
     }
+    #ifdef GCW0
+    sdl_screen = SDL_SetVideoMode(320,240,display_cfg.bpp,(sdl_screen->flags | SDL_ANYFORMAT) & ~SDL_DOUBLEBUF & ~SDL_HWSURFACE);
+    #else
     sdl_screen = SDL_SetVideoMode(640,480,display_cfg.bpp,(sdl_screen->flags | SDL_ANYFORMAT) & ~SDL_DOUBLEBUF & ~SDL_HWSURFACE);
+    #endif
   }
 #ifdef DARWIN
   else if (display_cfg.video_mode == 1 && overlays_workarounds) {
@@ -103,7 +107,7 @@ void adjust_gui_resolution() {
   }
   SDL_ShowCursor(SDL_ENABLE);
   if (sdl_screen->flags & (SDL_DOUBLEBUF|SDL_HWSURFACE)) {
-    printf("gros débile frappe encore\n");
+    printf("gros dï¿½bile frappe encore\n");
     exit(1);
   }
 }
@@ -128,8 +132,13 @@ void display_read_config() {
    display_cfg.noborder	= raine_get_config_int(	"Display", "noborder", display_cfg.noborder);
    display_cfg.screen_x = raine_get_config_int( "Display", "screen_x", display_cfg.screen_x);
    display_cfg.screen_y = raine_get_config_int( "Display", "screen_y", display_cfg.screen_y);
+#ifdef GCW0
+   display_cfg.winx = raine_get_config_int( "Display", "winx", 320);
+   display_cfg.winy = raine_get_config_int( "Display", "winy", 240);
+#else
    display_cfg.winx = raine_get_config_int( "Display", "winx", 640);
    display_cfg.winy = raine_get_config_int( "Display", "winy", 480);
+#endif
    display_cfg.scanlines = raine_get_config_int( "Display", "scanlines", 0);
    display_cfg.stretch = raine_get_config_int( "Display", "stretch", 2);
    video_fps = raine_get_config_int( "Display", "video_fps", 15);
@@ -633,8 +642,13 @@ void resize(int call) {
 }
 
 void set_default_video_mode() {
+  #ifdef GCW0
+  display_cfg.screen_x = 320;
+  display_cfg.screen_y = 240;
+  #else
   display_cfg.screen_x = 640;
   display_cfg.screen_y = 480;
+  #endif
   display_cfg.bpp = 16;
 }
 

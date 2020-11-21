@@ -81,13 +81,14 @@ ifdef target
 		NO_ASM = 1
 	endif
 	ifeq ("${target}","gcw0")
-		RAINE_DEBUG =
+		# Uncomment to debug
+		RAINE_DEBUG = 1
 		VERBOSE = 1
 		USE_CURL =
 		NO_ASM = 1
 		DESTDIR = "./output"
 		# Uncomment to build for OD BETA
-		OD_BETA = 1
+		# OD_BETA = 1
 		# Choose profiling phase (PHASE = 1 or 2, 0 is inactive)
 		OD_PROFILE = 0
 	endif
