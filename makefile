@@ -82,7 +82,7 @@ ifdef target
 	endif
 	ifeq ("${target}","gcw0")
 		# Uncomment to debug
-		RAINE_DEBUG = 1
+		# RAINE_DEBUG = 1
 		VERBOSE = 1
 		USE_CURL =
 		NO_ASM = 1
